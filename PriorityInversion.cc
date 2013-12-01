@@ -416,6 +416,8 @@ int main(void)
 {
 	pthread_t P1_ID,P2_ID, P3_ID;       //p1, p2, p3 threads
 
+	cout<<"TEST\n\n";
+
 	isRunable[1] = true;
 	isRunable[2] = true;
 	isRunable[3] = true;
