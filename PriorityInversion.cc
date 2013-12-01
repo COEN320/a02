@@ -32,18 +32,14 @@ pthread_cond_t cond=PTHREAD_COND_INITIALIZER;
 
 float priority[PCnt]={0}; // priority of threads
 
-
-float emptyBuff[100];
 bool isRunable[PCnt]={0};;    // threads are runable?
-float emptyBuff2[100];
+
 int active_p=0;			  // detemine the active thread that should be run
-
-
 
 // indicate the algorithm here
 
-#define PRIORITY_CEILING
-//#define PRIORITY_INHERITANCE
+//#define PRIORITY_CEILING
+#define PRIORITY_INHERITANCE
 
 //=============================================================================
 // IMPLEMENT THE TIMER HERE
@@ -83,9 +79,8 @@ private:
 
 Sem::Sem() {
 	//initialize the mutex
-	//m_resourceMutex=PTHREAD_MUTEX_INITIALIZER;
-
-	//Seb: Correction..To Initialize properly..Constant can only be used on static mutex
+//	m_resourceMutex=PTHREAD_MUTEX_INITIALIZER;
+//	Seb: Correction..To Initialize properly..Constant can only be used on static mutex
 	pthread_mutex_init(&m_resourceMutex, NULL);
 
 	m_lockedBy = -1;
@@ -195,7 +190,8 @@ private:
 
 Sem::Sem() {
 	//initialize the mutex
-	m_resourceMutex=PTHREAD_MUTEX_INITIALIZER;
+//	m_resourceMutex=PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_init(&m_resourceMutex, NULL);
 
 	m_lockedBy = -1;
 
@@ -277,11 +273,7 @@ void Sem::unlock(int numOfUnlockingThread)
 #endif
 //=============================================================================
 
-int emptyBuff101[10000];
 Sem s[PCnt]; // mutexes are instantiated here
-int emptyBuff100[10000];
-
-
 
 //=============================================================================
 void * P1(void* arg)
@@ -392,25 +384,25 @@ void ThreadManager(){ // determines that which thread should be run
 	if (priority[active_p]>0)
 		cout<<", active_p="<<active_p<<"->";//<<endl;
 
-		p=-1;
-		for(i=1;i<PCnt;i++){ // find the thread with the most priority and set it as active thread
-			if (isRunable[i])
-			{
-			   if(priority[i]>p)
-			   {
-				   active_p=i;
+	p=-1;
+	for(i=1;i<PCnt;i++){ // find the thread with the most priority and set it as active thread
+		if (isRunable[i])
+		{
+		   if(priority[i]>p)
+		   {
+			   active_p=i;
 
-					p=priority[i];
-			   }
-			}
+				p=priority[i];
+		   }
 		}
+	}
 
-		pthread_mutex_unlock(&mutex);
-		pthread_cond_broadcast(&cond); // send the signal to the threads
+	pthread_mutex_unlock(&mutex);
+	pthread_cond_broadcast(&cond); // send the signal to the threads
 }
 
 //=============================================================================
-//                                 M     A     I   N
+//                                 M     A     I     N
 //=============================================================================
 int main(void)
 {

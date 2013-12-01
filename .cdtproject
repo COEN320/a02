@@ -13,6 +13,8 @@
 
 
 
+
+
 <item id="com.qnx.tools.ide.qde.core.QNXProjectProperties">
 <makefile value="Makefile"/>
 <command value="make"/>
@@ -21,8 +23,8 @@
 <dep_check value="false"/>
 <type value="1"/>
 <active_configurations>
-<configuration value="_x86_r"/>
 <configuration value="_x86_g"/>
+<configuration value="_x86_r"/>
 </active_configurations>
 </item>
 </data>
