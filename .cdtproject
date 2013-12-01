@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse-cdt version="2.0"?>
 
-<cdtproject/>
+<cdtproject>
+<data>
+<item id="org.eclipse.cdt.core.pathentry">
+<pathentry kind="src" path=""/>
+<pathentry kind="out" path=""/>
+<pathentry kind="con" path="com.qnx.tools.ide.qde.QDE_PROJECT_CONTAINER"/>
+</item>
+
+
+
+
+
+<item id="com.qnx.tools.ide.qde.core.QNXProjectProperties">
+<makefile value="Makefile"/>
+<command value="make"/>
+<code_coverage value="false"/>
+<profiling value="false"/>
+<dep_check value="false"/>
+<type value="1"/>
+<active_configurations>
+<configuration value="_x86_r"/>
+<configuration value="_x86_g"/>
+</active_configurations>
+</item>
+</data>
+</cdtproject>

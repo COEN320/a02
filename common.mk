@@ -19,14 +19,13 @@ LDFLAGS+=-lang-c++
 
 VFLAG_g=-gstabs+
 
-include $(MKFILES_ROOT)/qmacros.mk
 ifndef QNX_INTERNAL
 QNX_INTERNAL=$(PROJECT_ROOT)/.qnx_internal.mk
 endif
-include $(QNX_INTERNAL)
+#include $(QNX_INTERNAL)
+
+
+OPTIMIZE_TYPE=$(OPTIMIZE_TYPE_$(filter g, $(VARIANTS)))
+OPTIMIZE_TYPE_g=none
 
 include $(MKFILES_ROOT)/qtargets.mk
-
-OPTIMIZE_TYPE_g=none
-OPTIMIZE_TYPE=$(OPTIMIZE_TYPE_$(filter g, $(VARIANTS)))
-
