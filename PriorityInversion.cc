@@ -299,7 +299,7 @@ void * P1(void* arg)
 		}while(active_p!=1);				 // check the active thread
 
 		//+++++++++++++++++++++++++++++++++++++++++++++
-			cout<<"P1->";//<<cnt<<endl;
+			cout<<"P1->["<<cnt<<"]"<<endl;
 			if(cnt==1){			// Try to acquire mutex after running for 1 unit
 				cout << ".....Attempting to Lock Semaphore ..";
 				s[0].lock(1);
@@ -336,7 +336,7 @@ void * P2(void* arg)
 		}while(active_p!=2);				 // check the active thread
 
 		//+++++++++++++++++++++++++++++++++++++++++++++
-			cout<<"P2->";//<<cnt<<endl;
+			cout<<"P2->["<<cnt<<"]"<<endl;
 			if (cnt == 6){
 				cout << ".........P2 thread ends.........";
 				priority[2]=0; // to remove process 2 from the queue of ThreadManager
@@ -363,7 +363,7 @@ void * P3(void* arg)
 		}while(active_p!=3);				 // check the active thread
 
 		//+++++++++++++++++++++++++++++++++++++++++++++
-			cout<<"P3->"<<cnt<<endl;
+			cout<<"P3->["<<cnt<<"]"<<endl;
 			if(cnt==1){
 				cout << ".....Attempting to Lock Semaphore by P3..";
 				s[0].lock(3);
