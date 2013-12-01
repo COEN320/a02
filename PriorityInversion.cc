@@ -48,12 +48,9 @@ int active_p=0;			  // detemine the active thread that should be run
 //=============================================================================
 // IMPLEMENT THE TIMER HERE
 
-//timer is implemented in timer.h - for code clarity
-#include "timer.h"
-
+//timer is implemented in timer.h & timer.cc - for code clarity
 
 void ThreadManager();
-
 
 #ifdef PRIORITY_CEILING
 //=======================    PRIORITY_CEILING  ================================
@@ -65,7 +62,7 @@ void ThreadManager();
 
 class Sem  // The Priority Ceiling Mutex class
 {
-	public:
+public:
 	    double m_ceilingPriority;
 		Sem ();
 		~Sem();
@@ -384,7 +381,6 @@ void * P3(void* arg)
 	}
 }
 
-
 void ThreadManager(){ // determines that which thread should be run
 	float p;
 	int i;
@@ -425,7 +421,6 @@ int main(void)
 	isRunable[3] = true;
 
 	int cnt=0;
-
 
 	//creating up a periodic  timer to generate pulses every 1 sec.
 	Ctimer t(1,0);
