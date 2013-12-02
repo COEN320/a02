@@ -38,8 +38,8 @@ int active_p=0;			  // detemine the active thread that should be run
 
 // indicate the algorithm here
 
-//#define PRIORITY_CEILING
-#define PRIORITY_INHERITANCE
+#define PRIORITY_CEILING
+//#define PRIORITY_INHERITANCE
 
 //=============================================================================
 // IMPLEMENT THE TIMER HERE
