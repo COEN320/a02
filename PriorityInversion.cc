@@ -132,7 +132,7 @@ void Sem::lock(int numOfThreadThatIsAttemptingToLock)
 
 	isLockedBy = true;
 
-	cout << "..... Locked by" << m_lockedBy;
+	cout << "..... Semaphore locked by P" << m_lockedBy;
 
 }
 
@@ -140,12 +140,18 @@ void Sem::unlock(int numOfUnlockingThread)
 {
 	if (numOfUnlockingThread == m_lockedBy)
 	{
+
+		cout<<"\n......semaphore unlocked by P"<<m_lockedBy<<" .."<<endl;
+
 		// unblock the thread that failed to lock the semaphore
-		cout<<"\n......P"<<m_threadThatIsAttemptingToLock<<" unblocked .."<<endl;
-		isRunable[m_threadThatIsAttemptingToLock] = true;
+		if(!isRunable[m_threadThatIsAttemptingToLock])
+		{
+			cout<<"......P"<<m_threadThatIsAttemptingToLock<<" unblocked .."<<endl;
+			isRunable[m_threadThatIsAttemptingToLock] = true;
+			m_threadThatIsAttemptingToLock = -1;
+		}
 
 		//set original priority
-
 		if (m_isPriorityChanged)
 		{
 			m_isPriorityChanged = false;
@@ -158,10 +164,8 @@ void Sem::unlock(int numOfUnlockingThread)
 		}
 
 		m_lockedBy = -1;
+		pthread_mutex_unlock(&m_resourceMutex);
 	}
-
-
-	pthread_mutex_unlock(&m_resourceMutex);
 }
 #endif
 //=============================================================================
@@ -243,7 +247,7 @@ void Sem::lock(int numOfThreadThatIsAttemptingToLock)
 
 	isLockedBy = true;
 
-	cout << "..... Locked by" << m_lockedBy;
+	cout << "..... Semaphore locked by P" << m_lockedBy;
 
 }
 
@@ -251,9 +255,16 @@ void Sem::unlock(int numOfUnlockingThread)
 {
 	if (numOfUnlockingThread == m_lockedBy)
 	{
+
+		cout<<"\n......semaphore unlocked by P"<<m_lockedBy<<" .."<<endl;
+
 		// unblock the thread that failed to lock the semaphore
-		cout<<"\n......P"<<m_threadThatIsAttemptingToLock<<" unblocked .."<<endl;
-		isRunable[m_threadThatIsAttemptingToLock] = true;
+		if(!isRunable[m_threadThatIsAttemptingToLock])
+		{
+			cout<<"......P"<<m_threadThatIsAttemptingToLock<<" unblocked .."<<endl;
+			isRunable[m_threadThatIsAttemptingToLock] = true;
+			m_threadThatIsAttemptingToLock = -1;
+		}
 
 		//set original priority
 
@@ -269,10 +280,8 @@ void Sem::unlock(int numOfUnlockingThread)
 		}
 
 		m_lockedBy = -1;
+		pthread_mutex_unlock(&m_resourceMutex);
 	}
-
-
-	pthread_mutex_unlock(&m_resourceMutex);
 }
 
 #endif
@@ -386,9 +395,6 @@ void ThreadManager(){ // determines that which thread should be run
 
 	cout<<" scheduler runs ";
 
-	if (priority[active_p]>0)
-		cout<<", active_p="<<active_p<<"->";//<<endl;
-
 	p=-1;
 	for(i=1;i<PCnt;i++){ // find the thread with the most priority and set it as active thread
 		if (isRunable[i])
@@ -401,6 +407,9 @@ void ThreadManager(){ // determines that which thread should be run
 		   }
 		}
 	}
+
+	if (priority[active_p]>0)
+		cout<<", active_p="<<active_p<<endl;
 
 	pthread_mutex_unlock(&mutex);
 	pthread_cond_broadcast(&cond); // send the signal to the threads
@@ -420,7 +429,8 @@ int main(void)
 	int cnt=0;
 
 	//creating up a periodic  timer to generate pulses every 1 sec.
-	Ctimer t(1,0);
+	Ctimer t(0,10000000);
+	// *** TODO: Change back to Ctimer t(1,0);
 
 	while(1)
 	{
