@@ -69,7 +69,7 @@ private:
 
 		int m_lockedBy;
 		double m_originalPriority;
-		int m_threadThatIsAttemptingToLog;
+		int m_threadThatIsAttemptingToLock;
 
 		bool m_isPriorityChanged;
 
@@ -111,14 +111,16 @@ void Sem::lock(int numOfThreadThatIsAttemptingToLock)
 
 			priority[m_lockedBy] = m_ceilingPriority;
 
+			// block the thread that failed to lock the semaphore
+			cout<<"\n......P"<<numOfThreadThatIsAttemptingToLock<<" blocked .."<<endl;
 			isRunable[numOfThreadThatIsAttemptingToLock] = false;
 
 			m_isPriorityChanged = true;
 
-			m_threadThatIsAttemptingToLog = numOfThreadThatIsAttemptingToLock;
+			// Store number of the thread that failed to lock the semaphore
+			m_threadThatIsAttemptingToLock = numOfThreadThatIsAttemptingToLock;
 		}
 	}
-
 
 	//Unlock the scheduler mutex
 	pthread_mutex_unlock(&mutex);
@@ -132,14 +134,15 @@ void Sem::lock(int numOfThreadThatIsAttemptingToLock)
 
 	cout << "..... Locked by" << m_lockedBy;
 
-
 }
 
 void Sem::unlock(int numOfUnlockingThread)
 {
 	if (numOfUnlockingThread == m_lockedBy)
 	{
-		isRunable[m_threadThatIsAttemptingToLog] = true;
+		// unblock the thread that failed to lock the semaphore
+		cout<<"\n......P"<<m_threadThatIsAttemptingToLock<<" unblocked .."<<endl;
+		isRunable[m_threadThatIsAttemptingToLock] = true;
 
 		//set original priority
 
@@ -180,7 +183,7 @@ private:
 
 		int m_lockedBy;
 		double m_originalPriority;
-		int m_threadThatIsAttemptingToLog;
+		int m_threadThatIsAttemptingToLock;
 
 		bool m_isPriorityChanged;
 
@@ -220,14 +223,15 @@ void Sem::lock(int numOfThreadThatIsAttemptingToLock)
 
 			priority[m_lockedBy] = priority[numOfThreadThatIsAttemptingToLock];
 
+			// block the thread that failed to lock the semaphore
+			cout<<"\n......P"<<numOfThreadThatIsAttemptingToLock<<" blocked .."<<endl;
 			isRunable[numOfThreadThatIsAttemptingToLock] = false;
 
 			m_isPriorityChanged = true;
 
-			m_threadThatIsAttemptingToLog = numOfThreadThatIsAttemptingToLock;
+			m_threadThatIsAttemptingToLock = numOfThreadThatIsAttemptingToLock;
 		}
 	}
-
 
 	//Unlock the scheduler mutex
 	pthread_mutex_unlock(&mutex);
@@ -241,14 +245,15 @@ void Sem::lock(int numOfThreadThatIsAttemptingToLock)
 
 	cout << "..... Locked by" << m_lockedBy;
 
-
 }
 
 void Sem::unlock(int numOfUnlockingThread)
 {
 	if (numOfUnlockingThread == m_lockedBy)
 	{
-		isRunable[m_threadThatIsAttemptingToLog] = true;
+		// unblock the thread that failed to lock the semaphore
+		cout<<"\n......P"<<m_threadThatIsAttemptingToLock<<" unblocked .."<<endl;
+		isRunable[m_threadThatIsAttemptingToLock] = true;
 
 		//set original priority
 
@@ -354,11 +359,11 @@ void * P3(void* arg)
 		//+++++++++++++++++++++++++++++++++++++++++++++
 			cout<<"P3->["<<cnt<<"]"<<endl;
 			if(cnt==1){
-				cout << ".....Attempting to Lock Semaphore by P3..";
+				cout << ".....Attempting to Lock Semaphore by ..";
 				s[0].lock(3);
 			}
 			else if(cnt==3){
-				cout << ".....Unlocking Semaphore by P3..";
+				cout << ".....Unlocking Semaphore by ..";
 					s[0].unlock(3);
 			}
 			else if (cnt == 5){
