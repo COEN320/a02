@@ -1,5 +1,6 @@
 #include "timer.h"
 
+/*
 Ctimer::Ctimer()
 {
 	if ((m_chid = ChannelCreate (0)) == -1) {
@@ -8,12 +9,18 @@ Ctimer::Ctimer()
 		        exit (EXIT_FAILURE);
 		    }
 }
-
+*/
 
 Ctimer::Ctimer(int seconds, int nanoseconds)
 {
-	Ctimer();
-
+	//Ctimer();
+	if ((m_chid = ChannelCreate (0)) == -1) {
+		        fprintf (stderr, "couldn't create channel!\n");
+		        perror (NULL);
+		        exit (EXIT_FAILURE);
+		    }
+//	fprintf (stdout, "\nm_chid = %i", m_chid);
+	
 	setupPulseAndTimer(seconds, nanoseconds);
 
 }
