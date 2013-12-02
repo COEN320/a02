@@ -132,7 +132,7 @@ void Sem::lock(int numOfThreadThatIsAttemptingToLock)
 
 	isLockedBy = true;
 
-	cout << "..... Semaphore locked by P" << m_lockedBy;
+	cout << "\n..... Semaphore locked by P" << m_lockedBy;
 
 }
 
@@ -247,7 +247,7 @@ void Sem::lock(int numOfThreadThatIsAttemptingToLock)
 
 	isLockedBy = true;
 
-	cout << "..... Semaphore locked by P" << m_lockedBy;
+	cout << "\n..... Semaphore locked by P" << m_lockedBy;
 
 }
 
